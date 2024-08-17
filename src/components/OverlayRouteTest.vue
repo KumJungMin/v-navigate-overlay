@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import OverlayPanel from "@/components/overlay/OverlayPanel.vue";
+import OverlayPanel from "./overlay/OverlayPanel.vue";
 
 const router = useRouter();
 

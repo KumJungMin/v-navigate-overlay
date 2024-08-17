@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { useOverlayStore } from "@/stores/overlay";
+import { useOverlayStore } from "./stores/overlay";
 import { storeToRefs } from "pinia";
 
 const router = useRouter();

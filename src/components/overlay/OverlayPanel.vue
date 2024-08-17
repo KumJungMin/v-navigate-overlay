@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { getCurrentInstance, watchEffect, defineModel, computed } from "vue";
 import { onBeforeRouteLeave } from "vue-router";
-import { useOverlayStore } from "@/stores/overlay";
+import { useOverlayStore } from "../../stores/overlay";
 
 const isOverlayOpen = defineModel("isOverlayOpen", {
   type: Boolean,
