@@ -1,30 +1,25 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { useRouter } from "vue-router";
+import { useOverlayStore } from "@/stores/overlay";
+import { storeToRefs } from "pinia";
+
+const router = useRouter();
+const overlayStore = storeToRefs(useOverlayStore());
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <button @click="router.push('/home')">Go Home</button>
+  <button @click="router.push('/about')">Go About</button>
+  <div class="summary">current Stack {{ overlayStore.overlayStack }}</div>
+  <router-view> </router-view>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.summary {
+  position: fixed;
+  top: 20px;
+  font-size: 20px;
+  background-color: #f0f0f0;
+  padding: 10px;
 }
 </style>
