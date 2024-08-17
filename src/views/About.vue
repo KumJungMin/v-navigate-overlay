@@ -1,5 +1,5 @@
 <template>
-  <h1>about</h1>
+  <h2>about</h2>
 
   <OverlayRouteTest />
 </template>
