@@ -1,4 +1,12 @@
 {
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2022", "dom"],
+    "baseUrl": ".", 
+    "paths": {
+      "@/*": ["src/*"], // '@'를 src 폴더로 매핑
+    },
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
