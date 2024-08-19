@@ -1,36 +1,43 @@
 import { defineStore } from 'pinia';
-import { ref, Ref } from 'vue';
 
+interface OverlayInstance {
+  id: Number;
+  callback?: Function;
+}
 
-export const useOverlayStore = defineStore('overlay', () => {
-  const overlayStack: Ref<Number[]> = ref([]);
+export const useOverlayStore = defineStore({
+  id: 'overlay',
+  state: () => ({
+    overlayStack: [] as OverlayInstance[],
+  }),
+  getters: {
+    getCurrentOverlay(state): OverlayInstance {
+      return state.overlayStack.length > 0 ? state.overlayStack.at(-1)! : { id: 0, callback: () => {} };
+    },
+    hasOverlay(state): boolean {
+      return state.overlayStack.length > 0;
+    },
+  },
+  actions: {
+    open(instanceId: Number, callback: Function = () => {}) {
+      if (!instanceId) return;
 
-  const open = (instanceId: Number) => {
-    if (!instanceId) return;
+      if (!this.overlayStack.some(overlay => overlay.id === instanceId)) {
+        this.overlayStack.push({ id: instanceId, callback });
+      }
+    },
+    close(instanceId: Number) {
+      if (!instanceId) return;
 
-    if (!overlayStack.value.includes(instanceId)) {
-      overlayStack.value.push(instanceId);
-    }
-    
-  };
-
-  const close = (instanceId: Number) => {
-    if (!instanceId) return;
-    
-    const index = overlayStack.value.indexOf(instanceId);
-    if (index > -1) {
-      overlayStack.value.splice(index, 1);
-    }
-  };
-
-  const getCurrentOverlayInstanceId = () => {
-    return overlayStack.value.length > 0 ? overlayStack.value.at(-1) : 0;
-  };
-
-  return {
-    overlayStack,
-    open,
-    close,
-    getCurrentOverlayInstanceId,
-  };
+      const index = this.overlayStack.findIndex(overlay => overlay.id === instanceId);
+      if (index > -1) {
+        const overlayInstance = this.overlayStack[index];
+        this.overlayStack.splice(index, 1);
+        
+        // 콜백 함수가 존재하면 호출
+        const callback = overlayInstance.callback || (() => {});
+        callback();
+      }
+    },
+  },
 });

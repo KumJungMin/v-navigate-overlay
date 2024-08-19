@@ -2,6 +2,7 @@
 import { useRouter } from "vue-router";
 import { useOverlayStore } from "./stores/overlay";
 import { storeToRefs } from "pinia";
+import OverlayRouteTest from "./components/OverlayRouteTest.vue";
 
 const router = useRouter();
 const overlayStore = storeToRefs(useOverlayStore());
@@ -20,6 +21,7 @@ const overlayStore = storeToRefs(useOverlayStore());
   <hr />
   <button @click="router.push('/home')">Go Home</button>
   <button @click="router.push('/about')">Go About</button>
+  <OverlayRouteTest />
   <div class="summary">current Stack {{ overlayStore.overlayStack }}</div>
   <router-view> </router-view>
 </template>

@@ -1,10 +1,6 @@
 <template>
   <transition name="fade">
-    <div
-      v-if="isOverlayOpen"
-      class="overlay-panel"
-      :class="{ background: isFirstOverlay }"
-    >
+    <div v-if="isOverlayOpen" class="overlay-panel">
       <div class="modal-content">
         <button @click="close">Close</button>
         <slot></slot>
@@ -15,7 +11,6 @@
 
 <script setup lang="ts">
 import { getCurrentInstance, watchEffect, defineModel, computed } from "vue";
-import { onBeforeRouteLeave } from "vue-router";
 import { useOverlayStore } from "../../stores/overlay";
 
 const isOverlayOpen = defineModel("isOverlayOpen", {
@@ -31,30 +26,14 @@ const close = () => {
   isOverlayOpen.value = false; // 모달을 닫을 때 prop 값을 업데이트
 };
 
-onBeforeRouteLeave((_, __, next) => {
-  const isCurrentOverlay =
-    overlayStore.getCurrentOverlayInstanceId() === instanceId;
-
-  if (isCurrentOverlay) {
-    next(false); // 라우터 뒤로가기 막기
-    close(); // 모달 닫기
-  } else {
-    next(); // 진행
-  }
-});
-
 // 모달 열림/닫힘 상태에 따라 자동으로 스토어 업데이트
 watchEffect(() => {
   if (isOverlayOpen.value) {
-    overlayStore.open(instanceId);
+    overlayStore.open(instanceId, close);
   } else {
     overlayStore.close(instanceId);
   }
 });
-
-const isFirstOverlay = computed(
-  () => overlayStore.overlayStack[0] === instanceId
-);
 </script>
 
 <style>

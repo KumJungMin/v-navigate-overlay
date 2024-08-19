@@ -1,11 +1,7 @@
 <template>
   <h2>about</h2>
-
-  <OverlayRouteTest />
 </template>
 
-<script setup lang="ts">
-import OverlayRouteTest from "../components/OverlayRouteTest.vue";
-</script>
+<script setup lang="ts"></script>
 
 <style></style>

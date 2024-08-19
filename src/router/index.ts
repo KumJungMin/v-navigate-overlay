@@ -1,7 +1,8 @@
 // src/router/index.ts
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import About from '../views/About.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../views/Home.vue';
+import About from '../views/About.vue';
+import { overlayGuard } from './guards';
 
 const routes = [
   {
@@ -15,11 +16,14 @@ const routes = [
     name: 'about',
     component: About
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-})
+});
 
-export default router
+router.beforeEach(overlayGuard);
+// router.beforeEach(overlayGuard);
+
+export default router;
